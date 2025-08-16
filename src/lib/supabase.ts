@@ -10,12 +10,15 @@ console.log('🔧 [SUPABASE] Environment check:', {
   keyPreview: supabaseAnonKey ? `${supabaseAnonKey.substring(0, 20)}...` : 'missing'
 })
 
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!supabaseUrl || !supabaseAnonKey || 
+    supabaseUrl.includes('your-project-id') || 
+    supabaseAnonKey.includes('your-anon-key-here')) {
   console.error('❌ [SUPABASE] Missing environment variables!')
   console.error('❌ [SUPABASE] Please check your .env file contains:')
   console.error('   VITE_SUPABASE_URL=your_supabase_url')
   console.error('   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key')
-  throw new Error('Missing Supabase environment variables')
+  console.error('❌ [SUPABASE] Make sure to replace placeholder values with actual credentials!')
+  throw new Error('Missing or invalid Supabase environment variables. Please update your .env file with actual Supabase credentials.')
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {

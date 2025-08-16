@@ -324,6 +324,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('❌ [AUTH] Signin failed:', error)
+        
+        // Provide more helpful error messages
+        if (error.message.includes('Failed to fetch') || error.message.includes('fetch')) {
+          throw new Error('Unable to connect to authentication service. Please check your internet connection and ensure Supabase credentials are configured correctly.')
+        }
+        
         throw error
       }
 

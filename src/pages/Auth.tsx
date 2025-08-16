@@ -29,7 +29,14 @@ export default function Auth() {
       }
       navigate('/')
     } catch (err: any) {
-      setError(err.message)
+      // Provide user-friendly error messages
+      if (err.message.includes('Unable to connect to authentication service')) {
+        setError('Connection failed. Please check your internet connection or try again later.')
+      } else if (err.message.includes('Missing or invalid Supabase environment variables')) {
+        setError('Application configuration error. Please contact support.')
+      } else {
+        setError(err.message)
+      }
     } finally {
       setLoading(false)
     }
